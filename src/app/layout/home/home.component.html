@@ -1,0 +1,105 @@
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Product</h1>
+            </div>       
+        </div>
+    </div>
+</div>
+<section class="content"> 
+    <div class="row"> 
+        <div class="col-md-12">
+            <p-table #dt [value]="products" selectionMode="single" [(selection)]="selectProduct" dataKey="productId" (onRowSelect)="onRowSelect($event)"
+            [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+            [globalFilterFields]="['productId','name','description']">       
+                <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <span class="p-input-icon-left p-ml-auto">                      
+                    <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search" />
+                    </span>
+                </div>
+                </ng-template>
+                
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Product Id</th>              
+                        <th>name</th>
+                        <th>Description</th>
+                        <th>Unit Price</th>
+                        <th>Maximum Quantity</th>
+                        <th style="width:5rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Product>
+                    <tr [pSelectableRow]="Product">
+                        <td>{{Product.productId}}</td>
+                        <td>{{Product.name}}</td>  
+                        <td>{{Product.description}}</td>  
+                        <td>{{Product.unitPrice + (Product.unitPrice * 20/100)}}</td> 
+                        <td>{{Product.maximumQuantiry}}</td> 
+                        <td>
+                        <button type="button" pButton pRipple icon="pi pi-add" (click)="selectItem(Product)">                    
+                        </button>
+                        </td>            
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+             
+    <div class="container-fluid">
+        <div class="card-header">
+            <h4 class="alert alert-info" style='text-align:center;'>Order list</h4>                                                        
+        </div>        
+        <div class="card-body"> 
+        <form [formGroup]="custForm"> 
+        <div class="form-group">
+            <label class="control-label" >Customer Name:<span class="requiredStar">*</span></label>                                
+            <input class="form-control"  type="text" formControlName="customerName" required>                                  
+        </div>
+        <div class="form-group">
+            <label class="control-label" >Email:<span class="requiredStar">*</span></label>                                
+            <input class="form-control"  type="email" formControlName="customerEmail" required>                                  
+        </div>
+        </form>
+            <form [formGroup]="orderForm"> 
+            <div class="table-responsive">
+                <table formArrayName="lessons" class="table table-hover" style ="width:100%; overflow: hidden; white-space: nowrap; ">
+                    <thead class="bg bg-blue">
+                      <tr>
+                        <th >product Id</th>
+                        <th >Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>                       
+                        <tr *ngFor="let row of lessons.controls; let i = index">
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" formControlName="productId" readonly>                                         
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="number" formControlName="quantity">                                         
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+            <br>
+            <div class="row">                           
+                <div class="col-md-12">  
+                    <div class="card-header">                                                                                   
+                        <button class="btn btn-primary" (click)="onFormSubmit()"><i class="fa fa-plus-square"></i>Submit Order</button>
+                    </div>
+                </div>
+            </div> 
+          </form>
+        </div>
+    </div>
+</section>  
