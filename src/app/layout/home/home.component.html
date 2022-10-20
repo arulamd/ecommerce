@@ -30,6 +30,7 @@
                         <th>Description</th>
                         <th>Unit Price</th>
                         <th>Maximum Quantity</th>
+                        <th>Net Price</th>
                         <th style="width:5rem"></th>
                     </tr>
                 </ng-template>
@@ -38,8 +39,9 @@
                         <td>{{Product.productId}}</td>
                         <td>{{Product.name}}</td>  
                         <td>{{Product.description}}</td>  
-                        <td>{{Product.unitPrice + (Product.unitPrice * 20/100)}}</td> 
+                        <td>{{Product.unitPrice}}</td> 
                         <td>{{Product.maximumQuantiry}}</td> 
+                        <td>{{Product.unitPrice + (Product.unitPrice * 20/100)}}</td> 
                         <td>
                         <button type="button" pButton pRipple icon="pi pi-add" (click)="selectItem(Product)">                    
                         </button>
